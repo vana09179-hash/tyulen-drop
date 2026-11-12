@@ -429,9 +429,91 @@ html.lite .h-orbit img,html.lite .h-mascot,html.lite .case-box img{animation:non
 .seo-about h2{font-size:18px;color:var(--text,#f3f3f5);margin:0 0 8px}
 .seo-about b{color:var(--text,#f3f3f5)}
 .seo-about ul{margin:10px 0 0 18px}
+
+/* ===== hero video loop ===== */
+.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;opacity:.8;-webkit-mask-image:linear-gradient(90deg,transparent 18%,rgba(0,0,0,.35) 40%,#000 62%);mask-image:linear-gradient(90deg,transparent 18%,rgba(0,0,0,.35) 40%,#000 62%);pointer-events:none;z-index:0;transition:opacity 1s}
+.hero-vid.wait{opacity:0}
+.hero2 .h-right{z-index:1}
+/* ===== intro splash ===== */
+.splash{position:fixed;inset:0;z-index:300;display:grid;place-items:center;cursor:pointer;
+  background:radial-gradient(60% 55% at 50% 42%,#4a1410 0%,#1a0d0d 55%,#0b0b0d 100%);
+  clip-path:circle(150% at 50% 42%);transition:clip-path .85s cubic-bezier(.7,0,.25,1);animation:spauto .01s linear 5s forwards}
+.splash.out{clip-path:circle(0% at 50% 42%);pointer-events:none}
+@keyframes spauto{to{clip-path:circle(0% at 50% 42%);pointer-events:none}}
+.sp-stage{display:flex;flex-direction:column;align-items:center}
+.sp-sealwrap{position:relative;width:min(48vw,250px);aspect-ratio:1}
+.sp-seal{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 22px 30px rgba(0,0,0,.6));animation:spdrop 1s cubic-bezier(.3,1.45,.5,1) .15s both}
+@keyframes spdrop{0%{transform:translateY(-110vh) scale(.85,1.2)}55%{transform:translateY(0) scale(1.2,.8)}72%{transform:translateY(-16px) scale(.94,1.06)}86%{transform:translateY(0) scale(1.04,.97)}100%{transform:none}}
+.sp-ring{position:absolute;left:50%;top:88%;width:90px;height:26px;margin:-13px 0 0 -45px;border-radius:50%;border:3px solid rgba(255,150,130,.75);opacity:0;animation:spring 1s ease-out .63s both}
+.sp-ring.r2{animation-delay:.78s;border-color:rgba(255,210,170,.6)}
+@keyframes spring{0%{opacity:.95;transform:scale(.3)}100%{opacity:0;transform:scale(5.2)}}
+.sp-drop{position:absolute;left:50%;top:84%;width:11px;height:11px;margin:-5px;border-radius:50%;background:#ffb4a6;opacity:0;animation:spsplash .85s cubic-bezier(.2,.7,.4,1) .63s both}
+@keyframes spsplash{0%{opacity:1;transform:translate(0,0) scale(1)}55%{opacity:1;transform:translate(calc(var(--dx)*.8),var(--dy)) scale(1)}100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 70px)) scale(.4)}}
+.sp-title{display:flex;align-items:baseline;margin-top:20px;font-family:Unbounded,Onest,system-ui,sans-serif;font-weight:900;font-size:clamp(32px,7vw,62px);letter-spacing:.01em;color:#f3f3f5}
+.sp-title span{display:inline-block;opacity:0;transform:translateY(46px) scale(.4) rotate(-10deg);animation:sptl .55s cubic-bezier(.3,1.7,.5,1) forwards}
+.sp-title .gap{width:.32em}
+.sp-title .red{color:var(--accent,#ef3b2d)}
+@keyframes sptl{to{opacity:1;transform:none}}
+.sp-bar{width:min(62vw,280px);height:6px;border-radius:3px;background:rgba(255,255,255,.1);margin-top:24px;overflow:hidden}
+.sp-bar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--accent,#ef3b2d),#ffb36b);transition:width .3s ease}
+.sp-skip{position:absolute;left:0;right:0;bottom:26px;text-align:center;font-size:12.5px;color:rgba(255,255,255,.4)}
+/* ===== cinematic case opening ===== */
+.case-box{position:relative;isolation:isolate}
+.case-box::before{content:"";position:absolute;inset:-70%;z-index:-1;border-radius:50%;pointer-events:none;opacity:0;
+  background:repeating-conic-gradient(rgba(255,205,140,.42) 0 7deg,transparent 7deg 20deg);
+  -webkit-mask:radial-gradient(circle,#000 18%,transparent 62%);mask:radial-gradient(circle,#000 18%,transparent 62%)}
+.case-box.opening::before{animation:caserays .78s ease-out forwards}
+@keyframes caserays{0%{opacity:0;transform:scale(.35) rotate(0)}65%{opacity:1;transform:scale(1.05) rotate(55deg)}100%{opacity:0;transform:scale(1.5) rotate(95deg)}}
+.case-box::after{content:"";position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px;border-radius:50%;pointer-events:none;opacity:0;
+  border:4px solid rgba(255,232,205,.95);box-shadow:0 0 30px rgba(255,190,120,.8)}
+.case-box.opening::after{animation:caseshock .55s ease-out .56s forwards}
+@keyframes caseshock{0%{opacity:1;transform:scale(.4)}100%{opacity:0;transform:scale(9)}}
+.case-box.opening img{filter:drop-shadow(0 0 0 transparent);animation-name:caseopen,caseglow;animation-duration:.75s,.75s}
+@keyframes caseglow{70%{filter:drop-shadow(0 0 26px rgba(255,200,130,.95)) brightness(1.35)}}
+/* ===== level + achievements ===== */
+.lvl{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px 0 5px;border-radius:19px;background:var(--surface2,#202026);border:1px solid var(--line2,#33333c);color:var(--text,#f3f3f5);font-weight:800;font-size:13px;cursor:pointer;transition:transform .2s}
+.lvl:hover{transform:translateY(-1px)}
+.lvl b{display:grid;place-items:center;min-width:28px;height:28px;padding:0 6px;border-radius:14px;background:var(--accent,#ef3b2d);color:#fff;font-size:12.5px}
+.lvl .xpbar{width:74px;height:6px;border-radius:3px;background:var(--line2,#33333c);overflow:hidden}
+.lvl .xpbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent,#ef3b2d),#ffb36b);transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.lvl.bump{animation:lvlbump .7s cubic-bezier(.3,1.7,.5,1)}
+@keyframes lvlbump{35%{transform:scale(1.22)}}
+.ach-wrap{position:fixed;left:18px;bottom:18px;z-index:140;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.ach{display:flex;align-items:center;gap:12px;width:320px;max-width:calc(100vw - 36px);padding:12px 16px 12px 12px;border-radius:16px;
+  background:linear-gradient(135deg,#2c1310,#17121a);border:1px solid rgba(255,180,120,.35);box-shadow:0 16px 40px rgba(0,0,0,.55);
+  transform:translateX(-130%);transition:transform .55s cubic-bezier(.2,1.35,.4,1),opacity .35s}
+.ach.in{transform:none}.ach.out{opacity:0;transform:translateX(-24px)}
+.ach img{width:54px;height:54px;flex:none;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5));animation:achpop .7s cubic-bezier(.3,1.8,.5,1) .25s both}
+@keyframes achpop{from{transform:scale(0) rotate(-35deg)}}
+.ach small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#ffb36b}
+.ach b{display:block;font-size:15px;margin-top:1px}
+.ach span{display:block;font-size:12.5px;color:var(--muted,#8c8c98);margin-top:1px}
+.ach-panel{position:fixed;z-index:120;top:70px;right:16px;width:340px;max-width:calc(100vw - 32px);max-height:70vh;overflow:auto;padding:16px;border-radius:18px;
+  background:var(--panel,#111114);border:1px solid var(--line2,#33333c);box-shadow:0 20px 50px rgba(0,0,0,.6);opacity:0;transform:translateY(-8px) scale(.98);pointer-events:none;transition:.22s}
+.ach-panel.show{opacity:1;transform:none;pointer-events:auto}
+.ach-panel h4{font-size:15px;margin:0 0 4px}.ach-panel .ap-sub{font-size:12.5px;color:var(--muted,#8c8c98);margin-bottom:12px}
+.ap-row{display:flex;align-items:center;gap:12px;padding:8px;border-radius:12px}
+.ap-row+.ap-row{margin-top:4px}
+.ap-row img{width:42px;height:42px;object-fit:contain}
+.ap-row b{display:block;font-size:13.5px}.ap-row span{font-size:12px;color:var(--muted,#8c8c98)}
+.ap-row.lock img{filter:grayscale(1) brightness(.45)}.ap-row.lock b{color:var(--muted,#8c8c98)}
+.ap-row.done{background:rgba(255,180,120,.08)}
+@media (max-width:760px){.lvl .xpbar{display:none}.ach-wrap{left:10px;right:10px;bottom:86px}.ach{width:auto}}
+html.lite .hero-vid{display:none}
 </style>
 </head>
 <body>
+<div class="splash" id="splash" aria-hidden="true">
+  <div class="sp-stage">
+    <div class="sp-sealwrap"><i class="sp-drop" style="--dx:-120px;--dy:-70px;animation-delay:0.630s"></i><i class="sp-drop" style="--dx:-80px;--dy:-110px;animation-delay:0.645s"></i><i class="sp-drop" style="--dx:-35px;--dy:-130px;animation-delay:0.660s"></i><i class="sp-drop" style="--dx:30px;--dy:-125px;animation-delay:0.675s"></i><i class="sp-drop" style="--dx:78px;--dy:-105px;animation-delay:0.690s"></i><i class="sp-drop" style="--dx:118px;--dy:-64px;animation-delay:0.705s"></i><i class="sp-drop" style="--dx:-150px;--dy:-20px;animation-delay:0.720s"></i><i class="sp-drop" style="--dx:150px;--dy:-25px;animation-delay:0.735s"></i><span class="sp-ring"></span><span class="sp-ring r2"></span><img class="sp-seal" src="img/mega.webp" alt=""></div>
+    <div class="sp-title"><span style="animation-delay:0.780s">Т</span><span style="animation-delay:0.835s">Ю</span><span style="animation-delay:0.890s">Л</span><span style="animation-delay:0.945s">Е</span><span style="animation-delay:1.000s">Н</span><span style="animation-delay:1.055s">Ь</span><span class="gap"></span><span class="red" style="animation-delay:1.150s">Д</span><span class="red" style="animation-delay:1.210s">Р</span><span class="red" style="animation-delay:1.270s">О</span><span class="red" style="animation-delay:1.330s">П</span></div>
+    <div class="sp-bar"><i id="spBar"></i></div>
+  </div>
+  <div class="sp-skip">нажми, чтобы пропустить</div>
+</div>
+<script>try{if(sessionStorage.getItem('td_splash')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.getElementById('splash').remove()}catch(e){}</script>
+<div class="ach-wrap" id="achWrap" aria-live="polite"></div>
+<div class="ach-panel" id="achPanel" role="dialog" aria-label="Достижения"></div>
 <canvas id="bg"></canvas>
 <div class="rays"></div>
 <div class="dim"></div>
@@ -471,6 +553,7 @@ html.lite .h-orbit img,html.lite .h-mascot,html.lite .case-box img{animation:non
     <label class="search"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Найти кейс или тюленя" autocomplete="off"></label>
     <div class="tools">
       <button class="icon-btn" id="snd" title="Звук" aria-label="Звук"><svg class="ico" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+      <button class="lvl" id="lvl" type="button" title="Уровень и достижения"><b id="lvlN">1</b><span class="xpbar"><i id="xpBar"></i></span></button>
       <div id="authArea"><button class="login-btn" id="loginBtn">Войти</button></div>
     </div>
   </header>
@@ -1309,6 +1392,75 @@ CUR=CASES[0];$('#caseBox').innerHTML=`<img src="img/${CUR.img}.webp" alt="">`;
 buildStrip();setX(3*S+CW/2);
 loadInv();renderInv();setNeedle(0);renderUp();
 BG.init();FX.init();
+
+/* ================= SPLASH + HERO VIDEO ================= */
+(function(){
+  const sp=document.getElementById('splash');
+  if(sp){
+    const bar=document.getElementById('spBar'),t0=performance.now();
+    const pre=['img/mega.webp',...CASES.slice(0,6).map(c=>`img/${c.img}.webp`)];let done=0;
+    const tick=()=>{done++;bar.style.width=Math.round(done/pre.length*100)+'%'};
+    const loads=pre.map(src=>new Promise(r=>{const im=new Image();im.onload=im.onerror=()=>{tick();r()};im.src=src}));
+    let closed=false;
+    const close=()=>{if(closed)return;closed=true;bar.style.width='100%';sp.classList.add('out');try{sessionStorage.setItem('td_splash','1')}catch(e){}setTimeout(()=>sp.remove(),900)};
+    Promise.race([Promise.all(loads),new Promise(r=>setTimeout(r,3500))]).then(()=>setTimeout(close,Math.max(0,1900-(performance.now()-t0))));
+    sp.addEventListener('click',close);addEventListener('keydown',close,{once:true});
+  }
+  if(!LITE){
+    const h=document.getElementById('hero');
+    if(h){
+      const v=document.createElement('video');v.className='hero-vid wait';v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.setAttribute('aria-hidden','true');
+      v.poster='img/hero-loop.jpg';v.innerHTML='<source src="img/hero-loop.webm" type="video/webm"><source src="img/hero-loop.mp4" type="video/mp4">';
+      v.addEventListener('playing',()=>v.classList.remove('wait'),{once:true});h.prepend(v);
+      if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)v.play().catch(()=>{});else v.pause()})).observe(h);
+    }
+  }
+})();
+
+/* ================= LEVELS + ACHIEVEMENTS ================= */
+const XP_R={common:5,ind:10,sec:20,cov:45,gold:120};
+const ACH=[
+  {id:'first',img:'c_fish',n:'Первый улов',d:'Открой свой первый кейс',t:s=>s.cases>=1},
+  {id:'fisher',img:'karas',n:'Рыбак',d:'Открой 10 кейсов',t:s=>s.cases>=10},
+  {id:'wolf',img:'pirat',n:'Морской волк',d:'Открой 50 кейсов',t:s=>s.cases>=50},
+  {id:'secret',img:'s_fire',n:'Тайное',d:'Выбей предмет редкости «Тайное»',t:s=>s.cov>=1},
+  {id:'gold',img:'mega',n:'ЗОЛОТО!',d:'Выбей золотой предмет',t:s=>s.gold>=1},
+  {id:'up',img:'i_up',n:'Апгрейд-мастер',d:'Выиграй апгрейд',t:s=>s.upw>=1},
+  {id:'coll',img:'i_net',n:'Коллекционер',d:'Собери 10 разных предметов',t:s=>s.uniq>=10},
+  {id:'lvl5',img:'tsar',n:'Царь горы',d:'Достигни 5 уровня',t:s=>s.lvl>=5},
+];
+let PROG=null;
+function progKey(){return 'td_prog_'+(USER?USER.id:'guest')}
+function loadProg(){let p=null;try{p=JSON.parse(localStorage.getItem(progKey()))}catch(e){}PROG=Object.assign({xp:0,cases:0,cov:0,gold:0,upw:0,ach:[]},p||{})}
+function saveProg(){try{localStorage.setItem(progKey(),JSON.stringify(PROG))}catch(e){}}
+function lvlOf(xp){let L=1,need=60;while(xp>=need){xp-=need;L++;need=60+40*(L-1)}return{L,cur:xp,need}}
+function renderLvl(bump){const o=lvlOf(PROG.xp);$('#lvlN').textContent=o.L;$('#xpBar').style.width=Math.round(o.cur/o.need*100)+'%';
+  $('#lvl').title=`Уровень ${o.L} · ${o.cur}/${o.need} XP · достижений ${PROG.ach.length}/${ACH.length}`;
+  if(bump){const b=$('#lvl');b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump')}}
+const achQ=[];let achBusy=false;
+function toastAch(img,kicker,title,text){achQ.push([img,kicker,title,text]);if(!achBusy)nextAch()}
+function nextAch(){const it=achQ.shift();if(!it){achBusy=false;return}achBusy=true;const [img,k,t,d]=it;
+  const el=document.createElement('div');el.className='ach';el.innerHTML=`<img src="img/${img}.webp" alt=""><div><small>${k}</small><b>${esc(t)}</b><span>${esc(d)}</span></div>`;
+  $('#achWrap').appendChild(el);requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('in')));
+  A.coin();const r=el.getBoundingClientRect();FX.burst(r.left+40,r.top+30,.35);
+  setTimeout(()=>{el.classList.add('out');setTimeout(()=>{el.remove();nextAch()},380)},3200)}
+function checkAch(){const st={...PROG,uniq:inv.size,lvl:lvlOf(PROG.xp).L};let n=0;
+  for(const a of ACH)if(!PROG.ach.includes(a.id)&&a.t(st)){PROG.ach.push(a.id);toastAch(a.img,'Достижение',a.n,a.d);n++}
+  if(n)saveProg()}
+function gainXP(n){const before=lvlOf(PROG.xp).L;PROG.xp+=n;const after=lvlOf(PROG.xp).L;renderLvl(true);
+  if(after>before)toastAch('i_star','Новый уровень!',`Уровень ${after}`,'Так держать — тюлени тобой гордятся');}
+const _celebrate=celebrate;
+celebrate=function(item,el,kind,big){_celebrate(item,el,kind,big);
+  if(kind==='up')PROG.upw++;else PROG.cases++;
+  if(item.r==='cov')PROG.cov++;if(item.r==='gold')PROG.gold++;
+  gainXP((XP_R[item.r]||5)*(kind==='up'?2:1));saveProg();setTimeout(checkAch,1600)};
+function renderAchPanel(){const o=lvlOf(PROG.xp);
+  $('#achPanel').innerHTML=`<h4>Уровень ${o.L}</h4><div class="ap-sub">${o.cur} / ${o.need} XP до следующего · достижений ${PROG.ach.length} из ${ACH.length}</div>`+
+    ACH.map(a=>`<div class="ap-row ${PROG.ach.includes(a.id)?'done':'lock'}"><img src="img/${a.img}.webp" alt=""><div><b>${a.n}</b><span>${a.d}</span></div></div>`).join('')}
+$('#lvl').onclick=e=>{e.stopPropagation();A.init();A.click();renderAchPanel();$('#achPanel').classList.toggle('show')};
+document.addEventListener('click',e=>{const p=$('#achPanel');if(p.classList.contains('show')&&!p.contains(e.target))p.classList.remove('show')});
+const _switchUser=switchUser;switchUser=function(){_switchUser();loadProg();renderLvl()};
+loadProg();renderLvl();
 })();
 </script>
 </body>
