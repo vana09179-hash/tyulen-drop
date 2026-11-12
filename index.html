@@ -1451,6 +1451,7 @@ function gainXP(n){const before=lvlOf(PROG.xp).L;PROG.xp+=n;const after=lvlOf(PR
   if(after>before)toastAch('i_star','Новый уровень!',`Уровень ${after}`,'Так держать — тюлени тобой гордятся');}
 const _celebrate=celebrate;
 celebrate=function(item,el,kind,big){_celebrate(item,el,kind,big);
+  window.tdTrack&&tdTrack(kind==='up'?'upg':'cases');
   if(kind==='up')PROG.upw++;else PROG.cases++;
   if(item.r==='cov')PROG.cov++;if(item.r==='gold')PROG.gold++;
   gainXP((XP_R[item.r]||5)*(kind==='up'?2:1));saveProg();setTimeout(checkAch,1600)};
@@ -1461,6 +1462,19 @@ $('#lvl').onclick=e=>{e.stopPropagation();A.init();A.click();renderAchPanel();$(
 document.addEventListener('click',e=>{const p=$('#achPanel');if(p.classList.contains('show')&&!p.contains(e.target))p.classList.remove('show')});
 const _switchUser=switchUser;switchUser=function(){_switchUser();loadProg();renderLvl()};
 loadProg();renderLvl();
+})();
+</script>
+<script>
+/* счётчик посещений для admin.html (abacus — бесплатный счётчик без аккаунта) */
+(function(){var NS='td-k7q2x9',API='https://abacus.jasoncameron.dev/hit/'+NS+'/';
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}}
+var off=ls('td_notrack')==='1'||/^(localhost|127\.)/.test(location.hostname);
+function hit(k){if(off)return;try{fetch(API+k,{keepalive:true,mode:'cors'}).catch(function(){})}catch(e){}}
+window.tdTrack=hit;
+var d=new Date(),day=d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
+hit('visits');
+if(!ls('td_seen')){ls('td_seen','1');hit('uniq')}
+if(ls('td_day')!==day){ls('td_day',day);hit('d-'+day)}
 })();
 </script>
 </body>
